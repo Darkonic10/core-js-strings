@@ -469,7 +469,10 @@ function encodeToRot13(str) {
   const codeA = 'A'.charCodeAt(0);
   const codeASmall = 'a'.charCodeAt(0);
   str.split('').forEach((letter) => {
-    if (letter.toUpperCase().charCodeAt(0) < codeA || letter.toUpperCase().charCodeAt(0) > 'Z'.charCodeAt(0)) {
+    if (
+      letter.toUpperCase().charCodeAt(0) < codeA ||
+      letter.toUpperCase().charCodeAt(0) > 'Z'.charCodeAt(0)
+    ) {
       result.push(letter);
     } else if (letter === letter.toUpperCase()) {
       const index = letter.charCodeAt(0) - codeA;
@@ -508,7 +511,21 @@ function encodeToRot13(str) {
  */
 function getCardId(value) {
   const suit = ['♣', '♦', '♥', '♠'];
-  const cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const cards = [
+    'A',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'J',
+    'Q',
+    'K',
+  ];
   return cards.indexOf(value.slice(0, -1)) + suit.indexOf(value.slice(-1)) * 13;
 }
 
