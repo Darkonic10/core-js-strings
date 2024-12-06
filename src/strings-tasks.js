@@ -425,8 +425,8 @@ function extractNameFromTemplate(value) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.replaceAll(/[<>]/g, '');
 }
 
 /**
@@ -444,8 +444,8 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -464,8 +464,22 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const result = [];
+  const codeA = 'A'.charCodeAt(0);
+  const codeASmall = 'a'.charCodeAt(0);
+  str.split('').forEach((letter) => {
+    if (letter.toUpperCase().charCodeAt(0) < codeA || letter.toUpperCase().charCodeAt(0) > 'Z'.charCodeAt(0)) {
+      result.push(letter);
+    } else if (letter === letter.toUpperCase()) {
+      const index = letter.charCodeAt(0) - codeA;
+      result.push(String.fromCharCode(((index + 13) % 26) + codeA));
+    } else {
+      const index = letter.charCodeAt(0) - codeASmall;
+      result.push(String.fromCharCode(((index + 13) % 26) + codeASmall));
+    }
+  });
+  return result.join('');
 }
 
 /**
@@ -492,8 +506,10 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const suit = ['♣', '♦', '♥', '♠'];
+  const cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  return cards.indexOf(value.slice(0, -1)) + suit.indexOf(value.slice(-1)) * 13;
 }
 
 module.exports = {
